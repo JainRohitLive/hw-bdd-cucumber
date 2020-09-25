@@ -16,7 +16,7 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  fail "Unimplemented"
+  expect(/[\s\S]*#{e1}[\s\S]*#{e2}/).to match(page.body)
 end
 
 When /^I press "(.*)" button/ do |clicker|
@@ -26,10 +26,10 @@ end
 Then /I should (not )?see the following movies: (.*)$/ do |present, list|
   movies = list.split(', ')
   movies.each do |ele|
-    if present?
+    if present.nil?
       expect(page).to have_content(ele)
     else
-      expect(page).to have_content(ele)
+      expect(page).not_to have_content(ele)
     end
   end
 end
